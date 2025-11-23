@@ -38,7 +38,7 @@ formatter:
     - dst_net
     # - bgp_next_hop
     # Removed: - bgp_communities (not using bgp communities in this setup)
-    - as_path
+    # - as_path
     - mpls_ttl
     - mpls_label
     # Removed - mpls_ip (unclear use for sFlow in this context)
