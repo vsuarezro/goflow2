@@ -1,0 +1,52 @@
+formatter:
+  fields: # Only include the fields you want in the JSON output
+    # Removed: time_flow_start_ns, time_flow_end_ns (not needed for sFlow)
+    # Removed: icmp_type, icmp_code (not needed)
+    # Removed: - packets , always 1 in this binary for sFlow
+    - type
+    - time_received_ns
+    - sequence_num
+    - sampling_rate
+    - sampler_address
+    - bytes
+    - src_addr
+    - dst_addr
+    - etype
+    - proto
+    - src_port
+    - dst_port
+    - in_if
+    - out_if
+    - src_mac
+    - dst_mac
+    # - src_vlan
+    # - dst_vlan
+    # - vlan_id
+    - ip_tos
+    - forwarding_status
+    - ip_ttl
+    - ip_flags
+    - tcp_flags
+    - ipv6_flow_label
+    - fragment_id
+    - fragment_offset
+    # - src_as
+    # - dst_as
+    - next_hop
+    # - next_hop_as
+    - src_net
+    - dst_net
+    # - bgp_next_hop
+    # Removed: - bgp_communities (not using bgp communities in this setup)
+    - as_path
+    - mpls_ttl
+    - mpls_label
+    # Removed - mpls_ip (unclear use for sFlow in this context)
+    - mpls_exp
+    - mpls_bos
+    # - observation_domain_id
+    # - observation_point_id
+    - layer_stack
+    - layer_size
+    - ipv6_routing_header_addresses
+    - ipv6_routing_header_seg_left

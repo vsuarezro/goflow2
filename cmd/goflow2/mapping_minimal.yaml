@@ -1,0 +1,24 @@
+formatter:
+  fields: # Minimal set of fields for MPLS monitoring
+    - type
+    - time_received_ns
+    - sampling_rate
+    - sampler_address
+    - bytes
+    - packets
+    - src_addr
+    - dst_addr
+    - etype
+    - proto
+    - src_port
+    - dst_port
+    - in_if
+    - out_if
+    - ip_tos
+    - ip_ttl
+    - tcp_flags
+    - mpls_ttl
+    - mpls_label
+    - mpls_exp
+    - mpls_bos
+    - layer_stack
