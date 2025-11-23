@@ -91,6 +91,8 @@ message FlowMessage {
   repeated uint32 mpls_ttl = 80;
   repeated uint32 mpls_label = 81;
   repeated bytes mpls_ip = 82;
+  repeated uint32 mpls_exp = 83;      // NEW: EXP/TC bits (0-7)
+  repeated uint32 mpls_bos = 84;      // NEW: Bottom of Stack (0 or 1)
 
   uint32 observation_domain_id = 70;
   uint32 observation_point_id = 71;

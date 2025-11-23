@@ -518,7 +518,7 @@ func ParseMPLS(flowMessage *ProtoProducerMessage, data []byte, pc ParseConfig) (
 	flowMessage.AddLayer("MPLS")
 
 	var eType []byte
-	var mplsLabel, mplsTtl []uint32
+	var mplsLabel, mplsTtl, mplsExp, mplsBos []uint32
 
 	iterateMpls := true
 	var offset int
@@ -528,7 +528,7 @@ func ParseMPLS(flowMessage *ProtoProducerMessage, data []byte, pc ParseConfig) (
 			break
 		}
 		label := binary.BigEndian.Uint32(append([]byte{0}, data[offset:offset+3]...)) >> 4
-		//exp := data[offset+2] > 1
+		exp := (data[offset+2] >> 1) & 0x7
 		bottom := data[offset+2] & 1
 		ttl := data[offset+3]
 		offset += 4
@@ -549,6 +549,8 @@ func ParseMPLS(flowMessage *ProtoProducerMessage, data []byte, pc ParseConfig) (
 
 		mplsLabel = append(mplsLabel, label)
 		mplsTtl = append(mplsTtl, uint32(ttl))
+		mplsExp = append(mplsExp, uint32(exp))
+		mplsBos = append(mplsBos, uint32(bottom))
 	}
 
 	res.Size = offset
@@ -560,6 +562,8 @@ func ParseMPLS(flowMessage *ProtoProducerMessage, data []byte, pc ParseConfig) (
 
 		flowMessage.MplsLabel = mplsLabel
 		flowMessage.MplsTtl = mplsTtl
+		flowMessage.MplsExp = mplsExp
+		flowMessage.MplsBos = mplsBos
 	}
 
 	// get next parser

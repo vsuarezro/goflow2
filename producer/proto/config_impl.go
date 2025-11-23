@@ -15,6 +15,8 @@ var (
 		"MplsIp":                     true,
 		"MplsLabel":                  true,
 		"MplsTtl":                    true,
+		"MplsExp":                    true,
+		"MplsBos":                    true,
 		"LayerStack":                 true,
 		"LayerSize":                  true,
 		"Ipv6RoutingHeaderAddresses": true,
