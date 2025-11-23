@@ -1,6 +1,7 @@
 package protoproducer
 
 import (
+	"encoding/base64"
 	"encoding/binary"
 	"encoding/hex"
 	"net"
@@ -23,6 +24,7 @@ const (
 	RendererDateTime     RendererID = "datetime"
 	RendererDateTimeNano RendererID = "datetimenano"
 	RendererString       RendererID = "string"
+	RendererBase64       RendererID = "base64"
 )
 
 var (
@@ -35,6 +37,7 @@ var (
 		RendererDateTime:     DateTimeRenderer,
 		RendererDateTimeNano: DateTimeNanoRenderer,
 		RendererString:       StringRenderer,
+		RendererBase64:       Base64Renderer,
 	}
 
 	defaultRenderers = map[string]RenderFunc{
@@ -47,6 +50,7 @@ var (
 		"BgpNextHop":     IPRenderer,
 		"MplsLabelIp":    IPRenderer,
 		"MplsIp":         IPRenderer,
+		"HeaderData":     Base64Renderer,
 		"Etype":          EtypeRenderer,
 		"Proto":          ProtoRenderer,
 		"SrcNet":         NetworkRenderer,
@@ -360,4 +364,11 @@ func IcmpCodeType(proto, icmpCode, icmpType uint32) string {
 
 func ICMPRenderer(msg *ProtoProducerMessage, fieldName string, data interface{}) interface{} {
 	return IcmpCodeType(uint32(msg.Proto), uint32(msg.IcmpCode), uint32(msg.IcmpType))
+}
+
+func Base64Renderer(msg *ProtoProducerMessage, fieldName string, data interface{}) interface{} {
+	if dataC, ok := data.([]byte); ok {
+		return base64.StdEncoding.EncodeToString(dataC)
+	}
+	return NilRenderer(msg, fieldName, data)
 }

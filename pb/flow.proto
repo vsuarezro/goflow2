@@ -97,6 +97,9 @@ message FlowMessage {
   uint32 observation_domain_id = 70;
   uint32 observation_point_id = 71;
 
+  // Raw packet header data (for sFlow sampled headers)
+  bytes header_data = 85;
+
   // Encapsulation
   enum LayerStack {
     Ethernet = 0;

@@ -25,6 +25,10 @@ func ParseSampledHeader(flowMessage *ProtoProducerMessage, sampledHeader *sflow.
 
 func ParseSampledHeaderConfig(flowMessage *ProtoProducerMessage, sampledHeader *sflow.SampledHeader, config PacketMapper) error {
 	data := (*sampledHeader).HeaderData
+
+	// Store the raw header data
+	flowMessage.HeaderData = data
+
 	switch (*sampledHeader).Protocol {
 	case 1: // Ethernet
 		if config == nil {

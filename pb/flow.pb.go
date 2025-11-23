@@ -2,17 +2,16 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v3.21.12
-// source: flow.proto
+// source: pb/flow.proto
 
 package flowpb
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -61,11 +60,11 @@ func (x FlowMessage_FlowType) String() string {
 }
 
 func (FlowMessage_FlowType) Descriptor() protoreflect.EnumDescriptor {
-	return file_flow_proto_enumTypes[0].Descriptor()
+	return file_pb_flow_proto_enumTypes[0].Descriptor()
 }
 
 func (FlowMessage_FlowType) Type() protoreflect.EnumType {
-	return &file_flow_proto_enumTypes[0]
+	return &file_pb_flow_proto_enumTypes[0]
 }
 
 func (x FlowMessage_FlowType) Number() protoreflect.EnumNumber {
@@ -74,7 +73,7 @@ func (x FlowMessage_FlowType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FlowMessage_FlowType.Descriptor instead.
 func (FlowMessage_FlowType) EnumDescriptor() ([]byte, []int) {
-	return file_flow_proto_rawDescGZIP(), []int{0, 0}
+	return file_pb_flow_proto_rawDescGZIP(), []int{0, 0}
 }
 
 // Encapsulation
@@ -147,11 +146,11 @@ func (x FlowMessage_LayerStack) String() string {
 }
 
 func (FlowMessage_LayerStack) Descriptor() protoreflect.EnumDescriptor {
-	return file_flow_proto_enumTypes[1].Descriptor()
+	return file_pb_flow_proto_enumTypes[1].Descriptor()
 }
 
 func (FlowMessage_LayerStack) Type() protoreflect.EnumType {
-	return &file_flow_proto_enumTypes[1]
+	return &file_pb_flow_proto_enumTypes[1]
 }
 
 func (x FlowMessage_LayerStack) Number() protoreflect.EnumNumber {
@@ -160,7 +159,7 @@ func (x FlowMessage_LayerStack) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FlowMessage_LayerStack.Descriptor instead.
 func (FlowMessage_LayerStack) EnumDescriptor() ([]byte, []int) {
-	return file_flow_proto_rawDescGZIP(), []int{0, 1}
+	return file_pb_flow_proto_rawDescGZIP(), []int{0, 1}
 }
 
 type FlowMessage struct {
@@ -223,13 +222,15 @@ type FlowMessage struct {
 	BgpCommunities []uint32 `protobuf:"varint,101,rep,packed,name=bgp_communities,json=bgpCommunities,proto3" json:"bgp_communities,omitempty"`
 	AsPath         []uint32 `protobuf:"varint,102,rep,packed,name=as_path,json=asPath,proto3" json:"as_path,omitempty"`
 	// MPLS information
-	MplsTtl                    []uint32                 `protobuf:"varint,80,rep,packed,name=mpls_ttl,json=mplsTtl,proto3" json:"mpls_ttl,omitempty"`
-	MplsLabel                  []uint32                 `protobuf:"varint,81,rep,packed,name=mpls_label,json=mplsLabel,proto3" json:"mpls_label,omitempty"`
-	MplsIp                     [][]byte                 `protobuf:"bytes,82,rep,name=mpls_ip,json=mplsIp,proto3" json:"mpls_ip,omitempty"`
-	MplsExp                    []uint32                 `protobuf:"varint,83,rep,packed,name=mpls_exp,json=mplsExp,proto3" json:"mpls_exp,omitempty"` // NEW: EXP/TC bits (0-7)
-	MplsBos                    []uint32                 `protobuf:"varint,84,rep,packed,name=mpls_bos,json=mplsBos,proto3" json:"mpls_bos,omitempty"` // NEW: Bottom of Stack (0 or 1)
-	ObservationDomainId        uint32                   `protobuf:"varint,70,opt,name=observation_domain_id,json=observationDomainId,proto3" json:"observation_domain_id,omitempty"`
-	ObservationPointId         uint32                   `protobuf:"varint,71,opt,name=observation_point_id,json=observationPointId,proto3" json:"observation_point_id,omitempty"`
+	MplsTtl             []uint32 `protobuf:"varint,80,rep,packed,name=mpls_ttl,json=mplsTtl,proto3" json:"mpls_ttl,omitempty"`
+	MplsLabel           []uint32 `protobuf:"varint,81,rep,packed,name=mpls_label,json=mplsLabel,proto3" json:"mpls_label,omitempty"`
+	MplsIp              [][]byte `protobuf:"bytes,82,rep,name=mpls_ip,json=mplsIp,proto3" json:"mpls_ip,omitempty"`
+	MplsExp             []uint32 `protobuf:"varint,83,rep,packed,name=mpls_exp,json=mplsExp,proto3" json:"mpls_exp,omitempty"` // NEW: EXP/TC bits (0-7)
+	MplsBos             []uint32 `protobuf:"varint,84,rep,packed,name=mpls_bos,json=mplsBos,proto3" json:"mpls_bos,omitempty"` // NEW: Bottom of Stack (0 or 1)
+	ObservationDomainId uint32   `protobuf:"varint,70,opt,name=observation_domain_id,json=observationDomainId,proto3" json:"observation_domain_id,omitempty"`
+	ObservationPointId  uint32   `protobuf:"varint,71,opt,name=observation_point_id,json=observationPointId,proto3" json:"observation_point_id,omitempty"`
+	// Raw packet header data (for sFlow sampled headers)
+	HeaderData                 []byte                   `protobuf:"bytes,85,opt,name=header_data,json=headerData,proto3" json:"header_data,omitempty"`
 	LayerStack                 []FlowMessage_LayerStack `protobuf:"varint,103,rep,packed,name=layer_stack,json=layerStack,proto3,enum=flowpb.FlowMessage_LayerStack" json:"layer_stack,omitempty"`
 	LayerSize                  []uint32                 `protobuf:"varint,104,rep,packed,name=layer_size,json=layerSize,proto3" json:"layer_size,omitempty"`
 	Ipv6RoutingHeaderAddresses [][]byte                 `protobuf:"bytes,105,rep,name=ipv6_routing_header_addresses,json=ipv6RoutingHeaderAddresses,proto3" json:"ipv6_routing_header_addresses,omitempty"` // SRv6
@@ -240,7 +241,7 @@ type FlowMessage struct {
 
 func (x *FlowMessage) Reset() {
 	*x = FlowMessage{}
-	mi := &file_flow_proto_msgTypes[0]
+	mi := &file_pb_flow_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -252,7 +253,7 @@ func (x *FlowMessage) String() string {
 func (*FlowMessage) ProtoMessage() {}
 
 func (x *FlowMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_flow_proto_msgTypes[0]
+	mi := &file_pb_flow_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -265,7 +266,7 @@ func (x *FlowMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FlowMessage.ProtoReflect.Descriptor instead.
 func (*FlowMessage) Descriptor() ([]byte, []int) {
-	return file_flow_proto_rawDescGZIP(), []int{0}
+	return file_pb_flow_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *FlowMessage) GetType() FlowMessage_FlowType {
@@ -604,6 +605,13 @@ func (x *FlowMessage) GetObservationPointId() uint32 {
 	return 0
 }
 
+func (x *FlowMessage) GetHeaderData() []byte {
+	if x != nil {
+		return x.HeaderData
+	}
+	return nil
+}
+
 func (x *FlowMessage) GetLayerStack() []FlowMessage_LayerStack {
 	if x != nil {
 		return x.LayerStack
@@ -632,12 +640,11 @@ func (x *FlowMessage) GetIpv6RoutingHeaderSegLeft() uint32 {
 	return 0
 }
 
-var File_flow_proto protoreflect.FileDescriptor
+var File_pb_flow_proto protoreflect.FileDescriptor
 
-const file_flow_proto_rawDesc = "" +
+const file_pb_flow_proto_rawDesc = "" +
 	"\n" +
-	"\n" +
-	"flow.proto\x12\x06flowpb\"\xd4\x0f\n" +
+	"\rpb/flow.proto\x12\x06flowpb\"\xf5\x0f\n" +
 	"\vFlowMessage\x120\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x1c.flowpb.FlowMessage.FlowTypeR\x04type\x12(\n" +
 	"\x10time_received_ns\x18n \x01(\x04R\x0etimeReceivedNs\x12!\n" +
@@ -690,7 +697,9 @@ const file_flow_proto_rawDesc = "" +
 	"\bmpls_exp\x18S \x03(\rR\amplsExp\x12\x19\n" +
 	"\bmpls_bos\x18T \x03(\rR\amplsBos\x122\n" +
 	"\x15observation_domain_id\x18F \x01(\rR\x13observationDomainId\x120\n" +
-	"\x14observation_point_id\x18G \x01(\rR\x12observationPointId\x12?\n" +
+	"\x14observation_point_id\x18G \x01(\rR\x12observationPointId\x12\x1f\n" +
+	"\vheader_data\x18U \x01(\fR\n" +
+	"headerData\x12?\n" +
 	"\vlayer_stack\x18g \x03(\x0e2\x1e.flowpb.FlowMessage.LayerStackR\n" +
 	"layerStack\x12\x1d\n" +
 	"\n" +
@@ -729,25 +738,25 @@ const file_flow_proto_rawDesc = "" +
 	"\x06Custom\x10cB)Z'github.com/netsampler/goflow2/pb;flowpbb\x06proto3"
 
 var (
-	file_flow_proto_rawDescOnce sync.Once
-	file_flow_proto_rawDescData []byte
+	file_pb_flow_proto_rawDescOnce sync.Once
+	file_pb_flow_proto_rawDescData []byte
 )
 
-func file_flow_proto_rawDescGZIP() []byte {
-	file_flow_proto_rawDescOnce.Do(func() {
-		file_flow_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_flow_proto_rawDesc), len(file_flow_proto_rawDesc)))
+func file_pb_flow_proto_rawDescGZIP() []byte {
+	file_pb_flow_proto_rawDescOnce.Do(func() {
+		file_pb_flow_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_pb_flow_proto_rawDesc), len(file_pb_flow_proto_rawDesc)))
 	})
-	return file_flow_proto_rawDescData
+	return file_pb_flow_proto_rawDescData
 }
 
-var file_flow_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_flow_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_flow_proto_goTypes = []any{
+var file_pb_flow_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_pb_flow_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_pb_flow_proto_goTypes = []any{
 	(FlowMessage_FlowType)(0),   // 0: flowpb.FlowMessage.FlowType
 	(FlowMessage_LayerStack)(0), // 1: flowpb.FlowMessage.LayerStack
 	(*FlowMessage)(nil),         // 2: flowpb.FlowMessage
 }
-var file_flow_proto_depIdxs = []int32{
+var file_pb_flow_proto_depIdxs = []int32{
 	0, // 0: flowpb.FlowMessage.type:type_name -> flowpb.FlowMessage.FlowType
 	1, // 1: flowpb.FlowMessage.layer_stack:type_name -> flowpb.FlowMessage.LayerStack
 	2, // [2:2] is the sub-list for method output_type
@@ -757,27 +766,27 @@ var file_flow_proto_depIdxs = []int32{
 	0, // [0:2] is the sub-list for field type_name
 }
 
-func init() { file_flow_proto_init() }
-func file_flow_proto_init() {
-	if File_flow_proto != nil {
+func init() { file_pb_flow_proto_init() }
+func file_pb_flow_proto_init() {
+	if File_pb_flow_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_flow_proto_rawDesc), len(file_flow_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pb_flow_proto_rawDesc), len(file_pb_flow_proto_rawDesc)),
 			NumEnums:      2,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_flow_proto_goTypes,
-		DependencyIndexes: file_flow_proto_depIdxs,
-		EnumInfos:         file_flow_proto_enumTypes,
-		MessageInfos:      file_flow_proto_msgTypes,
+		GoTypes:           file_pb_flow_proto_goTypes,
+		DependencyIndexes: file_pb_flow_proto_depIdxs,
+		EnumInfos:         file_pb_flow_proto_enumTypes,
+		MessageInfos:      file_pb_flow_proto_msgTypes,
 	}.Build()
-	File_flow_proto = out.File
-	file_flow_proto_goTypes = nil
-	file_flow_proto_depIdxs = nil
+	File_pb_flow_proto = out.File
+	file_pb_flow_proto_goTypes = nil
+	file_pb_flow_proto_depIdxs = nil
 }
